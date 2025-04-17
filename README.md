@@ -8,13 +8,21 @@ A lightweight fluent wrapper around Laravel `DB::transaction()` with support for
 composer require moe-mizrak/transaction-builder
 ```
 
+## Methods
+- `make()`: Create a new instance of the TransactionBuilder.
+- `attempts(int $attempts)`: The number of attempts to run the transaction. - default is 1.
+- `run(callable $callback)`: The callback to be executed within the transaction.
+- `onFailure(callable $callback)`: The callback to be executed if the transaction fails after all attempts.
+- `disableThrow()`: Disable throwing exceptions on failure. - default is false (meaning that exceptions will be thrown as usual).
+- `result()`: Get the result of the transaction. If the transaction fails, it will return null if `disableThrow()` is called, or throw an exception otherwise.
+
 ## Usage
 
 ```php
 $result = TransactionBuilder::make()
-    ->attempt(3) // number of attempts
+    ->attempts(3) // number of attempts
     ->run(function () {
-        // your transactional code here
+        // your transaction logic
         return 'done';
     })
     ->result();
@@ -42,7 +50,7 @@ $result = TransactionBuilder::make()
         // outer transaction logic
         
         TransactionBuilder::make()
-            ->attempt(3) // number of attempts
+            ->attempts(2) // number of attempts
             ->run(function () {
                 // inner transaction logic
             })
@@ -66,12 +74,13 @@ $result = TransactionBuilder::make()
         });
     })
     ->result();
-
 ```
 
-## Methods
-- `attempt(int $attempts)`: The number of attempts to run the transaction. - default is 1.
-- `run(callable $callback)`: The callback to be executed within the transaction.
-- `onFailure(callable $callback)`: The callback to be executed if the transaction fails after all attempts.
-- `disableThrow()`: Disable throwing exceptions on failure. - default is false (meaning that exceptions will be thrown as usual).
-- `result()`: Get the result of the transaction. If the transaction fails, it will return null if `disableThrow()` is called, or throw an exception otherwise.
+## 💫 Contributing
+
+> **Your contributions are welcome!** If you'd like to improve this package, simply create a pull request with your changes. Your efforts help enhance its functionality and documentation.
+
+> If you find this package useful, please consider ⭐ it to show your support!
+
+## 📜 License
+Transaction Builder for Laravel is an open-sourced software licensed under the **[MIT license](LICENSE)**.
