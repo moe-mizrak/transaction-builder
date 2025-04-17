@@ -1,0 +1,55 @@
+{
+  "name": "moe-mizrak/transaction-builder",
+  "description": "TransactionBuilder",
+  "keywords": [
+    "Moe Mizrak",
+    "laravel",
+    "transaction-builder",
+    "laravel-transaction-builder",
+    "TransactionBuilder",
+    "chainable transaction",
+    "transaction",
+    "database",
+    "database transaction"
+  ],
+  "type": "package",
+  "homepage": "https://github.com/moe-mizrak/transaction-builder",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Moe Mizrak"
+    }
+  ],
+  "require": {
+    "php": "^8.2"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^9.6.1",
+    "phpunit/phpunit": "^11.4",
+    "fakerphp/faker": "^1.24.1",
+    "ext-pdo": "*",
+    "laravel/pint": "^1.22"
+  },
+  "autoload": {
+    "psr-4": {
+      "MoeMizrak\\TransactionBuilder\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "MoeMizrak\\TransactionBuilder\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "MoeMizrak\\TransactionBuilder\\TransactionBuilderServiceProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "phpunit"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
