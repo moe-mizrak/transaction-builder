@@ -20,17 +20,37 @@ $result = TransactionBuilder::make()
     ->result();
 ```
 
-### Nested Transactions
+### On Failure Callback
 
 ```php
 $result = TransactionBuilder::make()
     ->run(function () {
         throw new \Exception("fail");
     })
-    ->onFailure(function ($e) {
-        logger()->error($e->getMessage());
+    ->onFailure(function ($exception) {
+        logger()->error($exception->getMessage());
     })
-    ->disableThrow()
+    ->disableThrow() // optional if you want to disable throwing exceptions since you already have onFailure callback
+    ->result();
+```
+
+### Nested Transactions
+
+```php
+$result = TransactionBuilder::make()
+    ->run(function () {
+        // outer transaction logic
+        
+        TransactionBuilder::make()
+            ->attempt(3) // number of attempts
+            ->run(function () {
+                // inner transaction logic
+            })
+            ->onFailure(function ($exception) {
+                logger()->error($exception->getMessage());
+            })
+            ->result();
+    })
     ->result();
 ```
 
@@ -40,6 +60,7 @@ You can also do this:
 $result = TransactionBuilder::make()
     ->run(function () {
         // outer transaction logic
+        
         DB::transaction(function () {
             // inner transaction logic
         });
