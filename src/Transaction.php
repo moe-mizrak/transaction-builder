@@ -29,6 +29,8 @@ final class Transaction
 
     /**
      * Create a new instance of the Transaction class.
+     *
+     * @return self
      */
     public static function make(): self
     {
@@ -37,6 +39,10 @@ final class Transaction
 
     /**
      * Set the number of attempts for the transaction and return the instance.
+     *
+     * @param int $attempts
+     *
+     * @return $this
      */
     public function attempts(int $attempts): self
     {
@@ -48,6 +54,7 @@ final class Transaction
     /**
      * Set the callback to be executed within the transaction.
      *
+     * @param Closure $callback
      *
      * @return $this
      */
@@ -67,9 +74,15 @@ final class Transaction
 
     /**
      * Set the callback to be executed on failure (If we caught an exception in the run method).
+     *
+     * @param Closure $onFailure
+     *
+     * @return $this
      */
     public function onFailure(Closure $onFailure): self
     {
+        $this->onFailure = $onFailure;
+
         // The caught exception is passed to the onFailure callback as function($e) { ... } so that you can handle/use it.
         if ($this->exception) {
             $onFailure($this->exception);
@@ -80,6 +93,8 @@ final class Transaction
 
     /**
      * Set the shouldThrow flag to false, preventing the exception from being thrown.
+     *
+     * @return $this
      */
     public function disableThrow(): self
     {
@@ -91,7 +106,7 @@ final class Transaction
     /**
      * Get the result of the transaction or throw the exception if any exception was occurred.
      *
-     *
+     * @return mixed
      * @throws Throwable
      */
     public function result(): mixed
