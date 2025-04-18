@@ -17,19 +17,18 @@ final class TransactionBuilderServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
+     *
+     * @return void
      */
-    public function boot(): void
-    {
-        $this->registerPublishing();
-    }
+    public function boot(): void {}
 
     /**
      * Register any application services.
+     *
+     * @return void
      */
     public function register(): void
     {
-        $this->configure();
-
         /*
          * When Facade is called, it will return an instance of TransactionBuilder.
          */
@@ -45,31 +44,11 @@ final class TransactionBuilderServiceProvider extends ServiceProvider
 
     /**
      * Get the services provided by the provider.
+     *
+     * @return string[]
      */
     public function provides(): array
     {
         return ['transaction-builder'];
-    }
-
-    /**
-     * Setup the configuration.
-     */
-    protected function configure(): void
-    {
-        $this->mergeConfigFrom(
-            __DIR__ . '/../config/transaction-builder.php', 'transaction-builder'
-        );
-    }
-
-    /**
-     * Register the package's publishable resources.
-     */
-    protected function registerPublishing(): void
-    {
-        if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__ . '/../config/transaction-builder.php' => config_path('transaction-builder.php'),
-            ], 'transaction-builder');
-        }
     }
 }
