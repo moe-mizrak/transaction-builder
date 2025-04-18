@@ -107,6 +107,7 @@ final class Transaction
      * Get the result of the transaction or throw the exception if any exception was occurred.
      *
      * @return mixed
+     *
      * @throws Throwable
      */
     public function result(): mixed
