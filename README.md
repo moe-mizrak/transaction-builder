@@ -2,6 +2,8 @@
 
 A lightweight fluent wrapper around Laravel `DB::transaction()` with support for retries, on-failure callbacks, and result access.
 
+This package was created after [onFailureCallback PR](https://github.com/laravel/framework/pull/55338) which is rejected since it has a breaking change, so I've created `transaction-builder` package which provides `onFailureCallback` feature and even more can be added. 
+
 ## Installation
 
 ```bash
